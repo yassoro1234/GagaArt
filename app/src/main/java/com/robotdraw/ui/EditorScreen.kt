@@ -155,7 +155,7 @@ fun EditorScreen(state: AppState) {
         }
 
         BoxWithConstraints(modifier = Modifier.weight(1f).fillMaxWidth()) {
-            val wide = maxWidth >= 720.dp
+            val wide = maxWidth >= 600.dp
             if (wide) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -182,7 +182,7 @@ fun EditorScreen(state: AppState) {
                             editor = editor,
                             tab = panelTab,
                             onTab = { panelTab = it },
-                            modifier = Modifier.fillMaxWidth().height(330.dp)
+                            modifier = Modifier.fillMaxWidth().height(maxHeight * 0.42f)
                         )
                     }
                 }
@@ -361,7 +361,7 @@ private fun SidePanel(
         ) {
             when (tab) {
                 0 -> BrushControls(editor)
-                1 -> ColorControls(editor)
+                1 -> ColorPanel(editor)
                 else -> LayerControls(editor)
             }
         }
@@ -457,71 +457,6 @@ private fun SliderRow(
         }
         Slider(value = value, onValueChange = onChange, valueRange = range)
     }
-}
-
-@Composable
-private fun ColorControls(editor: Editor) {
-    val argb = editor.color
-    val r = (argb shr 16) and 0xFF
-    val g = (argb shr 8) and 0xFF
-    val bl = argb and 0xFF
-    var hex by remember(argb) { mutableStateOf(String.format("%06X", argb and 0xFFFFFF)) }
-
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        Box(
-            modifier = Modifier
-                .size(64.dp)
-                .background(Color(argb), RoundedCornerShape(14.dp))
-        )
-        Spacer(Modifier.width(12.dp))
-        OutlinedTextField(
-            value = hex,
-            onValueChange = { input ->
-                val clean = input.uppercase().filter { it in "0123456789ABCDEF" }.take(6)
-                hex = clean
-                if (clean.length == 6) {
-                    editor.pickColor(clean.toLong(16).toInt() or 0xFF000000.toInt())
-                }
-            },
-            label = { Text("HEX") },
-            singleLine = true,
-            modifier = Modifier.weight(1f)
-        )
-    }
-
-    SliderRow("Red", r.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(it.toInt(), g, bl)) }
-    SliderRow("Green", g.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(r, it.toInt(), bl)) }
-    SliderRow("Blue", bl.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(r, g, it.toInt())) }
-
-    SectionTitle("PALETTE")
-    PALETTE.chunked(8).forEach { row ->
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            row.forEach { Swatch(it) { editor.pickColor(it) } }
-        }
-    }
-
-    if (editor.recentColors.isNotEmpty()) {
-        SectionTitle("RECENT")
-        Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            editor.recentColors.forEach { c -> Swatch(c) { editor.pickColor(c) } }
-        }
-    }
-}
-
-private fun argbOf(r: Int, g: Int, b: Int): Int =
-    (0xFF shl 24) or ((r and 0xFF) shl 16) or ((g and 0xFF) shl 8) or (b and 0xFF)
-
-@Composable
-private fun Swatch(color: Int, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(34.dp)
-            .background(Color(color), RoundedCornerShape(10.dp))
-            .clickable { onClick() }
-    )
 }
 
 @Composable

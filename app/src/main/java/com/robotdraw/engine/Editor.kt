@@ -32,6 +32,7 @@ class Editor(val doc: Document) {
     var tool by mutableStateOf(Tool.BRUSH)
     var color by mutableStateOf(0xFF1B1F27.toInt())
         private set
+    var backgroundColor by mutableStateOf(0xFFFFFFFF.toInt())
     val recentColors = mutableStateListOf<Int>()
 
     var canUndo by mutableStateOf(false)
@@ -124,6 +125,12 @@ class Editor(val doc: Document) {
         recentColors.remove(argb)
         recentColors.add(0, argb)
         while (recentColors.size > 12) recentColors.removeAt(recentColors.size - 1)
+    }
+
+    fun swapColors() {
+        val fg = color
+        color = backgroundColor
+        backgroundColor = fg
     }
 
     // ---- Strokes ------------------------------------------------------------------

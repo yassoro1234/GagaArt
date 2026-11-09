@@ -86,16 +86,13 @@ fun HomeScreen(state: AppState) {
             modifier = Modifier.fillMaxSize().padding(padding).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Column {
-                    Text("ROBOT DRAW", fontSize = 30.sp, fontWeight = FontWeight.Bold)
-                    Text("Professional digital drawing studio", color = TextMuted, fontSize = 13.sp)
-                }
-                RaisedButton("New project", selected = true) {
+                Text("ROBOT DRAW", fontSize = 30.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                Text("Professional digital drawing studio", color = TextMuted, fontSize = 13.sp, maxLines = 2)
+                RaisedButton("New project", selected = true, modifier = Modifier.fillMaxWidth()) {
                     state.screen = Screen.NewProject
                 }
             }
