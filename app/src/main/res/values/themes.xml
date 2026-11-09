@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Native splash shown by the system before the first frame. -->
+    <style name="Theme.RobotDraw.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.RobotDraw</item>
+    </style>
+
+    <style name="Theme.RobotDraw" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/launcher_background</item>
+    </style>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.8"
+        android:scaleY="0.8">
+
+        <!-- Antenna -->
+        <path
+            android:pathData="M54,30 L54,40"
+            android:strokeColor="#7D93AD"
+            android:strokeWidth="3"
+            android:strokeLineCap="round" />
+        <path
+            android:fillColor="#7D93AD"
+            android:pathData="M54,26 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+
+        <!-- Head -->
+        <path
+            android:fillColor="#B9C2CE"
+            android:pathData="M38,40 H70 A8,8 0 0 1 78,48 V68 A8,8 0 0 1 70,76 H38 A8,8 0 0 1 30,68 V48 A8,8 0 0 1 38,40 Z" />
+
+        <!-- Eyes -->
+        <path
+            android:fillColor="#1B1F26"
+            android:pathData="M48,54 m-4.5,0 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0" />
+        <path
+            android:fillColor="#1B1F26"
+            android:pathData="M60,54 m-4.5,0 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0" />
+
+        <!-- Mouth -->
+        <path
+            android:pathData="M45,66 H63"
+            android:strokeColor="#1B1F26"
+            android:strokeWidth="3"
+            android:strokeLineCap="round" />
+
+        <!-- Brush -->
+        <path
+            android:fillColor="#E7EAF0"
+            android:pathData="M74,94 L92,76 L96,80 L78,98 Z" />
+        <path
+            android:fillColor="#7D93AD"
+            android:pathData="M92,76 L97,71 Q100,68 101,71 Q104,74 101,77 L96,80 Z" />
+        <path
+            android:fillColor="#3A4350"
+            android:pathData="M74,94 L70,100 L78,98 Z" />
+    </group>
+</vector>
