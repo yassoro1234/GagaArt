@@ -119,7 +119,7 @@ class Editor(val doc: Document) {
 
     // ---- Colour -------------------------------------------------------------------
 
-    fun setColor(argb: Int) {
+    fun pickColor(argb: Int) {
         color = argb
         recentColors.remove(argb)
         recentColors.add(0, argb)
@@ -239,7 +239,7 @@ class Editor(val doc: Document) {
         if (ix !in 0 until doc.width || iy !in 0 until doc.height) return false
         val pixel = layer.bitmap.getPixel(ix, iy)
         if (AndroidColor.alpha(pixel) == 0) return false
-        setColor(pixel or 0xFF000000.toInt())
+        pickColor(pixel or 0xFF000000.toInt())
         return true
     }
 

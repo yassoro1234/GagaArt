@@ -480,7 +480,7 @@ private fun ColorControls(editor: Editor) {
                 val clean = input.uppercase().filter { it in "0123456789ABCDEF" }.take(6)
                 hex = clean
                 if (clean.length == 6) {
-                    editor.setColor(clean.toLong(16).toInt() or 0xFF000000.toInt())
+                    editor.pickColor(clean.toLong(16).toInt() or 0xFF000000.toInt())
                 }
             },
             label = { Text("HEX") },
@@ -489,14 +489,14 @@ private fun ColorControls(editor: Editor) {
         )
     }
 
-    SliderRow("Red", r.toFloat(), 0f..255f, "%.0f") { editor.setColor(argbOf(it.toInt(), g, bl)) }
-    SliderRow("Green", g.toFloat(), 0f..255f, "%.0f") { editor.setColor(argbOf(r, it.toInt(), bl)) }
-    SliderRow("Blue", bl.toFloat(), 0f..255f, "%.0f") { editor.setColor(argbOf(r, g, it.toInt())) }
+    SliderRow("Red", r.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(it.toInt(), g, bl)) }
+    SliderRow("Green", g.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(r, it.toInt(), bl)) }
+    SliderRow("Blue", bl.toFloat(), 0f..255f, "%.0f") { editor.pickColor(argbOf(r, g, it.toInt())) }
 
     SectionTitle("PALETTE")
     PALETTE.chunked(8).forEach { row ->
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            row.forEach { Swatch(it) { editor.setColor(it) } }
+            row.forEach { Swatch(it) { editor.pickColor(it) } }
         }
     }
 
@@ -506,7 +506,7 @@ private fun ColorControls(editor: Editor) {
             modifier = Modifier.horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            editor.recentColors.forEach { c -> Swatch(c) { editor.setColor(c) } }
+            editor.recentColors.forEach { c -> Swatch(c) { editor.pickColor(c) } }
         }
     }
 }
