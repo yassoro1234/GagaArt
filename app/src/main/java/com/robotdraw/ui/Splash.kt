@@ -24,7 +24,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.robotdraw.R
-import com.robotdraw.engine.Screen
 import kotlinx.coroutines.delay
 
 private const val SPLASH_MILLIS = 1400L
