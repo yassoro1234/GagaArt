@@ -156,6 +156,7 @@ fun EditorScreen(state: AppState) {
 
         BoxWithConstraints(modifier = Modifier.weight(1f).fillMaxWidth()) {
             val wide = maxWidth >= 600.dp
+            val panelHeight = maxHeight * 0.42f
             if (wide) {
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -182,7 +183,7 @@ fun EditorScreen(state: AppState) {
                             editor = editor,
                             tab = panelTab,
                             onTab = { panelTab = it },
-                            modifier = Modifier.fillMaxWidth().height(maxHeight * 0.42f)
+                            modifier = Modifier.fillMaxWidth().height(panelHeight)
                         )
                     }
                 }
