@@ -69,6 +69,8 @@ import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.PointerType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChanged
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -418,7 +420,7 @@ private fun BrushPreview(editor: Editor) {
                 val h = b.hardness.coerceIn(0.01f, 0.99f)
                 drawCircle(
                     brush = Brush.radialGradient(
-                        colorStops = listOf(
+                        colorStops = arrayOf(
                             0f to c.copy(alpha = alpha),
                             h to c.copy(alpha = alpha),
                             1f to c.copy(alpha = 0f)
