@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gaga_primary">#FF6B4A</color>
+    <color name="gaga_primary_dark">#E55A3A</color>
+    <color name="gaga_secondary">#2D3142</color>
+    <color name="gaga_background_light">#F8F7F4</color>
+    <color name="gaga_background_dark">#1A1B26</color>
+    <color name="gaga_surface_light">#FFFFFF</color>
+    <color name="gaga_surface_dark">#24283B</color>
+    <color name="gaga_accent">#7AA2F7</color>
+</resources>
