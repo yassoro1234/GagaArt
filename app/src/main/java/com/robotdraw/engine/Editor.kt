@@ -189,12 +189,16 @@ class Editor(val doc: Document) {
         doc.touch()
     }
 
+    /** Called after each finished stroke (used for the time-lapse snapshots). */
+    var onStrokeEnd: (() -> Unit)? = null
+
     fun endStroke() {
         if (strokeLayer == null) return
         strokeLayer = null
         paint = null
         doc.touch()
         onChanged?.invoke()
+        onStrokeEnd?.invoke()
     }
 
     private fun drawSegment(

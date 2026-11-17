@@ -79,6 +79,7 @@ import androidx.compose.ui.unit.sp
 import com.robotdraw.engine.BrushSettings
 import com.robotdraw.engine.Editor
 import com.robotdraw.engine.Storage
+import com.robotdraw.engine.Timelapse
 import com.robotdraw.engine.Tool
 import com.robotdraw.model.Document
 import com.robotdraw.model.Layer
@@ -106,7 +107,16 @@ fun EditorScreen(state: AppState) {
     // Autosave after each finished edit.
     androidx.compose.runtime.DisposableEffect(editor) {
         editor.onChanged = { Storage.scheduleSave(context, doc) }
-        onDispose { editor.onChanged = null }
+        // Time-lapse: one small snapshot after each finished stroke.
+        editor.onStrokeEnd = {
+            val flat = Storage.flatten(doc, android.graphics.Color.WHITE)
+            Timelapse.capture(context, doc.id, flat)
+            flat.recycle()
+        }
+        onDispose {
+            editor.onChanged = null
+            editor.onStrokeEnd = null
+        }
     }
 
     val importPicker = androidx.activity.compose.rememberLauncherForActivityResult(
@@ -139,6 +149,17 @@ fun EditorScreen(state: AppState) {
                 editor = editor,
                 onHome = { state.close(context) },
                 onImport = { importPicker.launch("image/*") },
+                onVideo = {
+                    Toast.makeText(context, "Creating video...", Toast.LENGTH_SHORT).show()
+                    Timelapse.exportVideo(context, doc.id, doc.name) { uri, frames ->
+                        val msg = when {
+                            uri != null -> "Saved $frames frames to Movies/ROBOT DRAW"
+                            frames == 0 -> "Draw something first, then export"
+                            else -> "Video export failed"
+                        }
+                        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                    }
+                },
                 exportOpen = exportOpen,
                 onToggleExport = { exportOpen = !exportOpen },
                 onExport = { jpeg ->
@@ -203,6 +224,7 @@ private fun TopBar(
     editor: Editor,
     onHome: () -> Unit,
     onImport: () -> Unit,
+    onVideo: () -> Unit,
     exportOpen: Boolean,
     onToggleExport: () -> Unit,
     onExport: (jpeg: Boolean) -> Unit,
@@ -223,6 +245,7 @@ private fun TopBar(
             RaisedButton("Reset angle") { editor.resetRotation() }
             RaisedButton("Import") { onImport() }
             RaisedButton("Export") { onToggleExport() }
+            RaisedButton("Video") { onVideo() }
             if (exportOpen) {
                 RaisedButton("PNG", selected = true) { onExport(false) }
                 RaisedButton("JPEG", selected = true) { onExport(true) }
